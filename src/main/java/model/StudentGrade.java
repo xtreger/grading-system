@@ -14,15 +14,8 @@ public class StudentGrade {
         this.score = score;
     }
 
-    public StudentGrade() {
-    }
-
     public String getStudentName() {
         return studentName;
-    }
-
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
     }
 
     public Rubric getRubric() {
