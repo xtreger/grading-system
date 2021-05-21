@@ -2,6 +2,7 @@ package controller;
 
 import model.Criteria;
 import model.Rubric;
+import model.StudentGrade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,7 @@ public class Controller {
 
     }
 
-    public List<Rubric> getListOfRubrics(){
+    public List<Rubric> getListOfRubrics() {
         return rubricList;
     }
 
@@ -54,5 +55,18 @@ public class Controller {
         throw new Exception("Rubric does not exist.");
     }
 
+    public StudentGrade addStudentGrade(String rubricName, StudentGrade studentGrade) throws Exception {
+
+        if (studentGrade.getStudentName() == null || studentGrade.getStudentName().isEmpty()) {
+
+            throw new Exception("You cannot add an empty Student Name.");
+
+        }
+
+        Rubric rubric = getRubric(rubricName);
+        studentGrade.setRubric(rubric);
+
+        return studentGrade;
+    }
 
 }
