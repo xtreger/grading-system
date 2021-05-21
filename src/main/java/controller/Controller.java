@@ -10,15 +10,32 @@ public class Controller {
 
     private final List<Rubric> rubricList = new ArrayList<>();
 
-    public Rubric addRubric(String rubricTitle) {
+    public Rubric addRubric(Rubric rubric) throws Exception {
 
-        if (rubricTitle == null) {
-            System.out.println("Rubric Title cannot be null!");
-            return null;
+        if (rubric.getTitle() == null) {
+            throw new Exception("Rubric Title cannot be null!");
         }
 
-        Rubric rubric = new Rubric(rubricTitle, new ArrayList<>());
         rubricList.add(rubric);
         return rubric;
     }
+
+
+    public void addCriteriaToRubric(Rubric rubric, Criteria criteria) throws Exception {
+
+        if (rubric.getCriteriaList().size() == 10) {
+
+            throw new Exception("You already have the maximum number of criteria.");
+
+        } else if (criteria.getName() == null || criteria.getName().isEmpty()) {
+
+            throw new Exception("You cannot add an empty criteria.");
+        } else {
+
+            rubric.getCriteriaList().add(criteria);
+
+        }
+
+    }
+
 }
