@@ -30,4 +30,12 @@ public class Rubric {
     public void setCriteriaList(List<Criteria> criteriaList) {
         this.criteriaList = criteriaList;
     }
+
+    @Override
+    public String toString() {
+        return "Rubric{" +
+                "title='" + title + '\'' +
+                ", criteriaList=" + criteriaList +
+                '}';
+    }
 }

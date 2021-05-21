@@ -19,4 +19,11 @@ public class Criteria {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Criteria{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

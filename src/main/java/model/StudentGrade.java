@@ -40,6 +40,15 @@ public class StudentGrade {
     public void setScore(Map<String, Double> score) {
         this.score = score;
     }
+
+    @Override
+    public String toString() {
+        return "StudentGrade{" +
+                "Student Name='" + studentName + '\'' +
+                ", Rubric=" + rubric +
+                ", Score=" + score +
+                '}';
+    }
 }
 
 
