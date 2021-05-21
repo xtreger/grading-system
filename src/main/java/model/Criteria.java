@@ -4,7 +4,8 @@ package model;
 public class Criteria {
     private String name;
 
-    public Criteria(String name) {
+    public Criteria(String name) throws Exception {
+
         this.name = name;
     }
 
