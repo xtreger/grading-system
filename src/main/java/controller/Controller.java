@@ -100,5 +100,18 @@ public class Controller {
         return studentGrade;
     }
 
+    public List<StudentGrade> getStudentGrades(String rubricName) throws Exception {
+
+        Rubric rubric = getRubric(rubricName);
+
+        List<StudentGrade> rubricGrades = new ArrayList<>();
+
+        for (StudentGrade grade : studentGradeList) {
+            if (grade.getRubric() == rubric)
+                rubricGrades.add(grade);
+        }
+        return rubricGrades;
+    }
+
 
 }
