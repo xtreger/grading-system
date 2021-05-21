@@ -174,5 +174,62 @@ public class Controller {
         return Collections.max(getAllScoresByRubric(rubricName));
     }
 
+    private List<Double> getAllScoresByCriteria(String criteriaName) throws Exception {
+
+
+        List<Double> scores = new ArrayList<>();
+        for (StudentGrade studentGrade : studentGradeList) {
+
+            if (studentGrade.getScore().containsKey(criteriaName)) {
+
+                scores.add(studentGrade.getScore().get(criteriaName));
+            }
+
+        }
+        if (scores.isEmpty()) {
+
+            throw new Exception("There are no scores in this criteria.");
+
+        }
+
+        return scores;
+    }
+
+    public double getAverageByCriteria(String criteriaName) throws Exception {
+
+        double total = 0.0;
+
+        List<Double> studentGradeScores = getAllScoresByCriteria(criteriaName);
+        for (Double score : studentGradeScores) {
+            total += score;
+        }
+        return total / studentGradeScores.size();
+    }
+
+    public double getStandardDeviationByCriteria(String criteriaName) throws Exception {
+
+        double average = getAverageByCriteria(criteriaName);
+        double standardDeviation = 0.0;
+
+        List<Double> studentGradeScores = getAllScoresByCriteria(criteriaName);
+
+        for (double score : studentGradeScores) {
+
+            standardDeviation += Math.pow(score - average, 2);
+        }
+
+        return Math.sqrt(standardDeviation / studentGradeScores.size());
+    }
+
+    public double getMinimumByCriteria(String criteriaName) throws Exception {
+
+        return Collections.min(getAllScoresByCriteria(criteriaName));
+    }
+
+    public double getMaximumByCriteria(String criteriaName) throws Exception {
+
+        return Collections.max(getAllScoresByCriteria(criteriaName));
+    }
+
 
 }

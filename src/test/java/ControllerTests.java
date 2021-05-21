@@ -189,6 +189,42 @@ public class ControllerTests {
 
     }
 
+    @Test
+    public void testGetAverageByCriteria() throws Exception {
+
+        initialiseDataForCriteria();
+
+        assertEquals(3.3333333333333335, controller.getAverageByCriteria("Criteria Doi"));
+
+    }
+
+    @Test
+    public void testStandardDeviationByCriteria() throws Exception {
+
+        initialiseDataForCriteria();
+
+        assertEquals(1.247219128924647, controller.getStandardDeviationByCriteria("Criteria Doi"));
+
+    }
+
+    @Test
+    public void testGetMinimumByCriteria() throws Exception {
+
+        initialiseDataForCriteria();
+
+        assertEquals(2, controller.getMinimumByCriteria("Criteria Doi"));
+
+    }
+
+    @Test
+    public void testGetMaximumByCriteria() throws Exception {
+
+        initialiseDataForCriteria();
+
+        assertEquals(5, controller.getMaximumByCriteria("Criteria Doi"));
+
+    }
+
     private void initialiseData() throws Exception {
         Rubric rubric = new Rubric("Name", criteriaList);
         controller.addRubric(rubric);
@@ -203,17 +239,45 @@ public class ControllerTests {
 
 
         Map<String, Double> scores = new HashMap<>();
+
+
         for (int i = 1; i < 6; i++) {
             scores.put(criteriaList.get(i).getName(), (double) i);
         }
 
-        for(StudentGrade studentGrade : studentGradeList){
+        for (StudentGrade studentGrade : studentGradeList) {
             studentGrade.setScore(scores);
             controller.addStudentGrade(rubric.getTitle(), studentGrade);
         }
     }
 
+    private void initialiseDataForCriteria() throws Exception {
+        Rubric rubric = new Rubric("Name", criteriaList);
+        controller.addRubric(rubric);
 
+        List<StudentGrade> studentGradeList = new ArrayList<>(Arrays.asList(
+                new StudentGrade("Mihai", null, new HashMap<>()),
+                new StudentGrade("Mihai1", null, new HashMap<>()),
+                new StudentGrade("Mihai2", null, new HashMap<>())));
+
+        Map<String, Double> score1 = new HashMap<>() {{
+            put(criteriaList.get(1).getName(), 3.0);
+        }};
+        Map<String, Double> score2 = new HashMap<>() {{
+            put(criteriaList.get(1).getName(), 2.0);
+        }};
+        Map<String, Double> score3 = new HashMap<>() {{
+            put(criteriaList.get(1).getName(), 5.0);
+        }};
+
+        studentGradeList.get(0).setScore(score1);
+        controller.addStudentGrade(rubric.getTitle(), studentGradeList.get(0));
+        studentGradeList.get(1).setScore(score2);
+        controller.addStudentGrade(rubric.getTitle(), studentGradeList.get(1));
+        studentGradeList.get(2).setScore(score3);
+        controller.addStudentGrade(rubric.getTitle(), studentGradeList.get(2));
+
+    }
 
 
 }
