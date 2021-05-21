@@ -5,10 +5,7 @@ import model.StudentGrade;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -155,6 +152,68 @@ public class ControllerTests {
 
         assertEquals(expectedMessage, actualMessage);
     }
+
+    @Test
+    public void testGetAverageByRubric() throws Exception {
+
+        initialiseData();
+
+        assertEquals(3.0, controller.getAverageByRubric("Name"));
+
+    }
+
+    @Test
+    public void testStandardDeviationByRubric() throws Exception {
+
+        initialiseData();
+
+        assertEquals(1.4142135623730951, controller.getStandardDeviationByRubric("Name"));
+
+    }
+
+    @Test
+    public void testGetMinimumByRubric() throws Exception {
+
+        initialiseData();
+
+        assertEquals(1, controller.getMinimumByRubric("Name"));
+
+    }
+
+    @Test
+    public void testGetMaximumByRubric() throws Exception {
+
+        initialiseData();
+
+        assertEquals(5, controller.getMaximumByRubric("Name"));
+
+    }
+
+    private void initialiseData() throws Exception {
+        Rubric rubric = new Rubric("Name", criteriaList);
+        controller.addRubric(rubric);
+
+        List<StudentGrade> studentGradeList = new ArrayList<>(Arrays.asList(
+                new StudentGrade("Mihai", null, new HashMap<>()),
+                new StudentGrade("Mihai1", null, new HashMap<>()),
+                new StudentGrade("Mihai2", null, new HashMap<>()),
+                new StudentGrade("Mihai3", null, new HashMap<>()),
+                new StudentGrade("Mihai4", null, new HashMap<>()),
+                new StudentGrade("Mihai5", null, new HashMap<>())));
+
+
+        Map<String, Double> scores = new HashMap<>();
+        for (int i = 1; i < 6; i++) {
+            scores.put(criteriaList.get(i).getName(), (double) i);
+        }
+
+        for(StudentGrade studentGrade : studentGradeList){
+            studentGrade.setScore(scores);
+            controller.addStudentGrade(rubric.getTitle(), studentGrade);
+        }
+    }
+
+
 
 
 }
