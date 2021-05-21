@@ -1,11 +1,13 @@
 import controller.Controller;
 import model.Criteria;
 import model.Rubric;
+import model.StudentGrade;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -73,7 +75,7 @@ public class ControllerTests {
         Rubric rubric = new Rubric("Name", criteriaList);
         controller.addRubric(rubric);
 
-        Exception exception = assertThrows(Exception.class, () -> controller.addCriteriaToRubric( "Name" , new Criteria("")));
+        Exception exception = assertThrows(Exception.class, () -> controller.addCriteriaToRubric("Name", new Criteria("")));
 
         String expectedMessage = "You cannot add an empty criteria.";
         String actualMessage = exception.getMessage();
@@ -93,6 +95,17 @@ public class ControllerTests {
 
         assertEquals(expectedMessage, actualMessage);
 
+    }
+
+    @Test
+    public void testAddStudentGradeWithEmptyStudentName() {
+
+        Exception exception = assertThrows(Exception.class, () -> controller.addStudentGrade("Name", new StudentGrade("", null, new HashMap<>())));
+
+        String expectedMessage = "You cannot add an empty Student Name.";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage);
     }
 
 }
