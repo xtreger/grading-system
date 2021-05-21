@@ -59,7 +59,7 @@ public class ControllerTests {
         Rubric rubric = new Rubric("Name", criteriaList);
         controller.addRubric(rubric);
 
-        Exception exception = assertThrows(Exception.class, () -> controller.addCriteriaToRubric(rubric, new Criteria("Criteria Unsprezece")));
+        Exception exception = assertThrows(Exception.class, () -> controller.addCriteriaToRubric("Name", new Criteria("Criteria Unsprezece")));
 
         String expectedMessage = "You already have the maximum number of criteria.";
         String actualMessage = exception.getMessage();
@@ -73,11 +73,26 @@ public class ControllerTests {
         Rubric rubric = new Rubric("Name", criteriaList);
         controller.addRubric(rubric);
 
-        Exception exception = assertThrows(Exception.class, () -> controller.addCriteriaToRubric( rubric , new Criteria("")));
+        Exception exception = assertThrows(Exception.class, () -> controller.addCriteriaToRubric( "Name" , new Criteria("")));
 
         String expectedMessage = "You cannot add an empty criteria.";
         String actualMessage = exception.getMessage();
 
         assertEquals(expectedMessage, actualMessage);
     }
+
+    @Test
+    public void testGetRubricWithNonExistingName() throws Exception {
+        Rubric rubric = new Rubric("Name", criteriaList);
+        controller.addRubric(rubric);
+
+        Exception exception = assertThrows(Exception.class, () -> controller.getRubric("LOL"));
+
+        String expectedMessage = "Rubric does not exist.";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage);
+
+    }
+
 }

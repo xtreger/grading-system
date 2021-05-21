@@ -21,7 +21,9 @@ public class Controller {
     }
 
 
-    public void addCriteriaToRubric(Rubric rubric, Criteria criteria) throws Exception {
+    public void addCriteriaToRubric(String rubricName, Criteria criteria) throws Exception {
+        Rubric rubric = getRubric(rubricName);
+
 
         if (rubric.getCriteriaList().size() == 10) {
 
@@ -40,6 +42,16 @@ public class Controller {
 
     public List<Rubric> getListOfRubrics(){
         return rubricList;
+    }
+
+    public Rubric getRubric(String title) throws Exception {
+
+        for (Rubric rubric : rubricList) {
+            if (rubric.getTitle().equals(title))
+                return rubric;
+        }
+
+        throw new Exception("Rubric does not exist.");
     }
 
 
