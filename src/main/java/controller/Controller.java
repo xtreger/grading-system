@@ -5,7 +5,10 @@ import model.Rubric;
 import model.StudentGrade;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class Controller {
 
@@ -111,6 +114,64 @@ public class Controller {
                 rubricGrades.add(grade);
         }
         return rubricGrades;
+    }
+
+    private List<Double> getAllScoresByRubric(String rubricName) throws Exception {
+
+        Rubric rubric = getRubric(rubricName);
+
+        List<Double> scores = new ArrayList<>();
+        for (StudentGrade studentGrade : studentGradeList) {
+
+            if (studentGrade.getRubric() == rubric && !studentGrade.getScore().isEmpty()) {
+
+                scores.addAll(studentGrade.getScore().values());
+            }
+
+        }
+        if (scores.isEmpty()) {
+
+            throw new Exception("There are no scores in this rubric.");
+
+        }
+
+        return scores;
+    }
+
+    public double getAverageByRubric(String rubricName) throws Exception {
+
+        double total = 0.0;
+
+        List<Double> studentGradeScores = getAllScoresByRubric(rubricName);
+        for (Double score : studentGradeScores) {
+            total += score;
+        }
+        return total / studentGradeScores.size();
+    }
+
+    public double getStandardDeviationByRubric(String rubricName) throws Exception {
+
+        double average = getAverageByRubric(rubricName);
+        double standardDeviation = 0.0;
+
+        List<Double> studentGradeScores = getAllScoresByRubric(rubricName);
+
+        for (double score : studentGradeScores) {
+
+            standardDeviation += Math.pow(score - average, 2);
+        }
+
+        return Math.sqrt(standardDeviation / studentGradeScores.size());
+    }
+
+    public double getMinimumByRubric(String rubricName) throws Exception {
+
+        return Collections.min(getAllScoresByRubric(rubricName));
+    }
+
+    public double getMaximumByRubric(String rubricName) throws Exception {
+
+        return Collections.max(getAllScoresByRubric(rubricName));
     }
 
 
