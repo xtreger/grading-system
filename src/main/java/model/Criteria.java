@@ -4,20 +4,13 @@ package model;
 public class Criteria {
     private String name;
 
-    public Criteria(String name) throws Exception {
+    public Criteria(String name) {
 
         this.name = name;
-    }
-
-    public Criteria() {
     }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override

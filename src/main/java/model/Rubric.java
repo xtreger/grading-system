@@ -12,23 +12,12 @@ public class Rubric {
         this.criteriaList = criteriaList;
     }
 
-    public Rubric() {
-    }
-
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public List<Criteria> getCriteriaList() {
         return criteriaList;
-    }
-
-    public void setCriteriaList(List<Criteria> criteriaList) {
-        this.criteriaList = criteriaList;
     }
 
     @Override
