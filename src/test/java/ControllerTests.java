@@ -80,5 +80,4 @@ public class ControllerTests {
 
         assertEquals(expectedMessage, actualMessage);
     }
-
 }

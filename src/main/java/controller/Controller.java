@@ -38,4 +38,9 @@ public class Controller {
 
     }
 
+    public List<Rubric> getListOfRubrics(){
+        return rubricList;
+    }
+
+
 }
