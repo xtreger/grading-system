@@ -10,6 +10,7 @@ import java.util.List;
 public class Controller {
 
     private final List<Rubric> rubricList = new ArrayList<>();
+    private final List<StudentGrade> studentGradeList = new ArrayList<>();
 
     public Rubric addRubric(Rubric rubric) throws Exception {
 
@@ -55,6 +56,7 @@ public class Controller {
         throw new Exception("Rubric does not exist.");
     }
 
+
     public StudentGrade addStudentGrade(String rubricName, StudentGrade studentGrade) throws Exception {
 
         if (studentGrade.getStudentName() == null || studentGrade.getStudentName().isEmpty()) {
@@ -65,8 +67,38 @@ public class Controller {
 
         Rubric rubric = getRubric(rubricName);
         studentGrade.setRubric(rubric);
+        studentGradeList.add(studentGrade);
+        return studentGrade;
+    }
+
+    //  This will add the score to the student grade
+    public StudentGrade addScore(Double score, StudentGrade studentGrade, Criteria criteria) throws Exception {
+
+        // throws an error if invalid score has been entered
+        if (score < 1 || score > 5) {
+
+            throw new Exception("The score must be between 1 and 5.");
+
+        }
+        // throws an error if the criteria does not exist in the rubric
+        if (!studentGrade.getRubric().getCriteriaList().contains(criteria)) {
+
+            throw new Exception("The criteria does not exist in the rubric.");
+
+        } //throws an error if the studetGradeList does not contain the passed studentGrade
+        if (!studentGradeList.contains(studentGrade)) {
+            throw new Exception("Student grade not found.");
+        }
+
+
+        int i = studentGradeList.indexOf(studentGrade);
+
+        //adds the score to the studentGrade and the studentGrade to the studentGradeList
+        studentGrade.getScore().put(criteria.getName(), score);
+        studentGradeList.set(i, studentGrade);
 
         return studentGrade;
     }
+
 
 }
