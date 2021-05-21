@@ -108,4 +108,53 @@ public class ControllerTests {
         assertEquals(expectedMessage, actualMessage);
     }
 
+    @Test
+    public void testAddInvalidScore() throws Exception {
+
+        Rubric rubric = new Rubric("Name", criteriaList);
+        controller.addRubric(rubric);
+
+        StudentGrade studentGrade = controller.addStudentGrade("Name", new StudentGrade("Mihello", rubric, new HashMap<>()));
+
+        Exception exception = assertThrows(Exception.class, () -> controller.addScore(6.0, studentGrade, criteriaList.get(0)));
+
+        String expectedMessage = "The score must be between 1 and 5.";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    public void testAddScoreNonExistingCriteria() throws Exception {
+
+        Rubric rubric = new Rubric("Name", criteriaList);
+        controller.addRubric(rubric);
+
+        StudentGrade studentGrade = controller.addStudentGrade("Name", new StudentGrade("Mihello", rubric, new HashMap<>()));
+
+        Exception exception = assertThrows(Exception.class, () -> controller.addScore(4.9, studentGrade, new Criteria("Criteria Douazeci")));
+
+        String expectedMessage = "The criteria does not exist in the rubric.";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    public void testAddScoreNonExistingStudentGrade() throws Exception {
+
+        Rubric rubric = new Rubric("Name", criteriaList);
+        controller.addRubric(rubric);
+
+        StudentGrade studentGrade = new StudentGrade("Mihello", rubric, new HashMap<>());
+
+        Exception exception = assertThrows(Exception.class, () -> controller.addScore(4.9, studentGrade, criteriaList.get(0)));
+
+        String expectedMessage = "Student grade not found.";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage);
+    }
+
+
 }
